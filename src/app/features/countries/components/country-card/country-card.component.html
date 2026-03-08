@@ -1,0 +1,63 @@
+<a
+  class="card flex flex-col overflow-hidden cursor-pointer group"
+  [routerLink]="['/country', country().cca3]"
+  [attr.aria-label]="'View details of ' + country().name.common"
+>
+  <div class="relative overflow-hidden">
+    <img
+      [src]="country().flags.svg"
+      [alt]="country().name.common + ' flag'"
+      class="w-full h-40 sm:h-48 object-cover transition-transform duration-500 group-hover:scale-105"
+      loading="lazy"
+    />
+  </div>
+
+  <div class="p-4 flex flex-col gap-2 flex-1">
+
+    <div class="flex items-start justify-between gap-2">
+      <h2 class="text-base sm:text-lg leading-tight">
+        {{ country().name.common }}
+      </h2>
+      <span
+        [class]="'badge shrink-0 ' + getRegionBadgeClass(country().region)"
+        [attr.aria-label]="'Region: ' + country().region"
+      >
+        {{ country().region }}
+      </span>
+    </div>
+
+    <dl class="mt-auto pt-2 border-t border-border space-y-1">
+
+      <div>
+        <dt class="sr-only">Population</dt>
+        <dd class="text-xs sm:text-sm text-text-secondary">
+          <span class="text-text-primary" aria-hidden="true">Population:</span>
+          {{ country().population | number }}
+        </dd>
+      </div>
+
+      @if (country().capital?.length) {
+        <div>
+          <dt class="sr-only">Capital</dt>
+          <dd class="text-xs sm:text-sm text-text-secondary">
+            <span class="text-text-primary" aria-hidden="true">Capital:</span>
+            {{ country().capital?.[0] }}
+          </dd>
+        </div>
+      }
+
+      @if (country().area) {
+        <div>
+          <dt class="sr-only">Area</dt>
+          <dd class="text-xs sm:text-sm text-text-secondary">
+            <span class="text-text-primary" aria-hidden="true">Area:</span>
+            {{ country().area | number }} km²
+          </dd>
+        </div>
+      }
+
+    </dl>
+
+  </div>
+
+</a>

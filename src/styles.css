@@ -1,0 +1,150 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import 'tailwindcss';
+
+/* ============================= */
+/* THEME TOKENS */
+/* ============================= */
+
+@theme {
+  /* Fonts */
+  --font-display: "Bebas Neue", sans-serif;       
+  --font-body: "DM Sans", "Outfit", sans-serif;
+
+  /* Colors */
+  --color-bg: #0f1115;
+  --color-surface: #171a21;
+  --color-surface-hover: #1f232b;
+  --color-border: #262b35;
+  --color-border-hover: #3b82f620;               
+
+  --color-text-primary: #e6e6e6;
+  --color-text-secondary: #9ca3af;
+  --color-accent: #3b82f6;
+  --color-accent-hover: #2563eb;
+
+  /* Radius, Shadow */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --shadow-card-hover: 0 8px 32px rgba(0, 0, 0, 0.6); 
+}
+
+/* ============================= */
+/* BASE LAYER */
+/* ============================= */
+
+@layer base {
+  html {
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-height: 100vh;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    letter-spacing: 0.05em;
+  }
+
+  a {
+    transition: color 0.2s ease;
+  }
+}
+
+/* ============================= */
+/* COMPONENTS */
+/* ============================= */
+
+@layer components {
+
+  /* Grain overlay */
+  .grain-overlay::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 128px 128px;
+    z-index: 0;
+  }
+
+  /* Card base */
+  .card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    transition: all 0.25s ease;
+  }
+
+  .card:hover {
+    background-color: var(--color-surface-hover);
+    border-color: var(--color-border-hover);        
+    box-shadow: var(--shadow-card-hover);          
+    transform: translateY(-4px);
+  }
+
+  /* Button */
+  .btn-primary {
+    background-color: var(--color-accent);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-sm);
+    transition: background-color 0.2s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-accent-hover);
+  }
+
+  /* Region badges */
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.badge-americas { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+.badge-europe   { background: rgba(59, 130, 246, 0.15);  color: #3b82f6; }
+.badge-asia     { background: rgba(245, 158, 11, 0.15);  color: #f59e0b; }
+.badge-africa   { background: rgba(239, 68, 68, 0.15);   color: #ef4444; }
+.badge-oceania  { background: rgba(168, 85, 247, 0.15);  color: #a855f7; }
+.badge-default  { background: rgba(156, 163, 175, 0.15); color: #9ca3af; }
+
+}
+
+/* ============================= */
+/* UTILITIES */
+/* ============================= */
+
+@layer utilities {
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.15);
+    border-radius: 999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.3);
+  }
+
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.2) transparent;
+  }
+}

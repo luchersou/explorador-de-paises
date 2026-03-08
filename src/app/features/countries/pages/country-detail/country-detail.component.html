@@ -1,0 +1,99 @@
+<main class="grain-overlay relative z-10 px-4 py-6 md:px-8 md:py-10 max-w-6xl mx-auto">
+
+  <button
+    routerLink="/"
+    class="btn-primary flex items-center gap-2 mb-8 text-sm cursor-pointer w-full sm:w-auto justify-center"
+    aria-label="Back to countries list"
+  >
+    ← Back
+  </button>
+
+  @if (loading()) {
+    <app-loading />
+  }
+
+  @if (error()) {
+    <app-error-message [message]="error()!" />
+  }
+
+  @if (country(); as c) {
+    <article class="card p-0 overflow-hidden" [attr.aria-label]="c.name.common + ' details'">
+
+      <!-- Flag -->
+      <div class="relative w-full h-52 sm:h-72 md:h-96 overflow-hidden" role="img" [attr.aria-label]="c.name.common + ' flag'">
+        <img
+          [src]="c.flags.svg"
+          [alt]="c.name.common + ' flag'"
+          class="w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-surface/90 via-transparent to-transparent" aria-hidden="true"></div>
+      </div>
+
+      <!-- Content -->
+      <div class="p-6 md:p-8">
+
+        <!-- Header -->
+        <header class="flex flex-wrap items-start justify-between gap-3 mb-6">
+          <h1 class="text-4xl md:text-5xl">{{ c.name.common }}</h1>
+          <span
+            [class]="'badge ' + getRegionBadgeClass(c.region)"
+            [attr.aria-label]="'Region: ' + c.region"
+          >
+            {{ c.region }}
+          </span>
+        </header>
+
+        <!-- Info grid -->
+        <dl class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm mb-8">
+
+          <div>
+            <dt class="text-text-primary font-medium">Population</dt>
+            <dd class="text-text-secondary">{{ c.population | number }}</dd>
+          </div>
+
+          <div>
+            <dt class="text-text-primary font-medium">Area</dt>
+            <dd class="text-text-secondary">{{ c.area ? (c.area | number) + ' km²' : '—' }}</dd>
+          </div>
+
+          <div>
+            <dt class="text-text-primary font-medium">Sub Region</dt>
+            <dd class="text-text-secondary">{{ c.subregion || '—' }}</dd>
+          </div>
+
+          <div>
+            <dt class="text-text-primary font-medium">Capital</dt>
+            <dd class="text-text-secondary">{{ c.capital?.[0] || '—' }}</dd>
+          </div>
+
+          <div>
+            <dt class="text-text-primary font-medium">Languages</dt>
+            <dd class="text-text-secondary">{{ getLanguages() }}</dd>
+          </div>
+
+          <div class="sm:col-span-2">
+            <dt class="text-text-primary font-medium">Currencies</dt>
+            <dd class="text-text-secondary">{{ getCurrencies() }}</dd>
+          </div>
+
+        </dl>
+
+        <!-- Border Countries -->
+        @if (borderCountries().length > 0) {
+          <section class="border-t border-border pt-6" aria-label="Border countries">
+            <h2 class="text-lg mb-3">Border Countries</h2>
+            <nav aria-label="Navigate to border countries">
+              <div class="flex flex-wrap gap-2">
+                @for (border of borderCountries(); track border.cca3) {
+                  <a [routerLink]="['/country', border.cca3]" class="card px-4 py-2 text-sm hover:border-accent transition-colors" [attr.aria-label]="'View details of ' + border.name.common">{{ border.name.common }}</a>
+                }
+              </div>
+            </nav>
+          </section>
+        }
+
+      </div>
+    </article>
+  }
+
+</main>
